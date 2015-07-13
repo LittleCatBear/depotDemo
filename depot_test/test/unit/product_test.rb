@@ -45,16 +45,29 @@ fixtures :products
   end
 
   test "product is not valid without a unique title" do
-  	product = Product.new(title:products(:ruby).title, description:"ihkj", price: 23, image_url: "fred.gif")
+  	product = Product.new(title: products(:ruby).title, description:"ihkj", price: 23, image_url: "fred.gif")
   	assert product.invalid?
   	assert_equal ["has already been taken"], product.errors[:title]
   end
 
+=begin
   test "product is not valid without a unique title - i18n" do 
   	product = Product.new(title: products(:ruby).title, description: "kjlkj", price: 23, image_url: "fred.gif")
 
   	assert product.invalid?
   	assert_equal [I18n.translate('errors.messages.taken')], product.errors[:title]
+  end
+=end
+
+
+  test "product has a valid length name" do 
+    product = Product.new(title: products(:valid_name).title, description: "khkj", price: 34, image_url: "kjh.gif")
+    assert product.invalid?
+  end
+
+  test "product has an invalid length name" do 
+    product = Product.new(title: "this is long enough", description: "khkj", price: 34, image_url: "kjh.png")
+    assert product.valid?
   end
   
 end
