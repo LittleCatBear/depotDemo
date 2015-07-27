@@ -1,6 +1,11 @@
 class CartsController < ApplicationController
   # GET /carts
   # GET /carts.json
+
+  #new first linegit add .
+  #new second line
+  #wip!!
+  #forth line
   def index
     @carts = Cart.all
 
