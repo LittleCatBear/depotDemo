@@ -1,5 +1,6 @@
 class StoreController < ApplicationController
-	#include CurrentCart
+	include CurrentCart
+  before_filter :set_cart
   def index
   	#range les produits par ordre alphabétique
   	@products = Product.order(:title)
