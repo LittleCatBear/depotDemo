@@ -6,6 +6,10 @@ class CartsController < ApplicationController
   #new second line
   #wip!!
   #forth line
+
+  before_filter :set_cart, only: [:show, :edit, :update, :destroy]
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+
   def index
     @carts = Cart.all
 
@@ -85,4 +89,18 @@ class CartsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private 
+    def set_cart
+      @cart = Cart.find(params[:id])
+    end
+
+    def cart_params
+      params[:cart]
+    end
+
+    def invalid_cart
+      logger.error "Attempt to access invalid cart #{params[:id]}"
+      redirect_to store_url, notice: 'Invalid cart'
+    end
 end

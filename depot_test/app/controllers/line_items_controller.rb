@@ -6,6 +6,7 @@ class LineItemsController < ApplicationController
   before_filter :set_line_item, only:[:show, :edit, :update, :destroy]
   # GET /line_items
   # GET /line_items.json
+
   def index
     @line_items = LineItem.all
 
@@ -87,5 +88,15 @@ class LineItemsController < ApplicationController
       format.html { redirect_to line_items_url }
       format.json { head :no_content }
     end
+  end
+
+  private 
+
+    def set_line_item
+      @line_item = LineItem.find(params[:id])
+    end
+    
+    def line_item_params
+    params.require(:line_item).permit(:product_id)
   end
 end
